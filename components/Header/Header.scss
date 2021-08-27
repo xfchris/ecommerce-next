@@ -1,0 +1,29 @@
+.header {
+  position: relative;
+  box-shadow: 0 -10px 10px 15px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 -10px 10px 15px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 -10px 10px 15px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+
+.top-bar{
+    &__right{
+        input {
+            background-color: transparent !important;
+            border: 0;
+            border-bottom: 2px solid $primary !important;
+            border-radius: 0;
+            color: $primary !important;
+            padding: 5px 0 !important;
+            width: 220px;
+            font-size: 20px;
+            transition: width 0.7s;
+            padding-right: 0px !important;
+    
+            &:focus {
+              width: 350px;
+            }
+        }
+    }
+  }
