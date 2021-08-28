@@ -1,4 +1,9 @@
 @import "./colors.scss", "./global.scss";
 
+//Layouts
 @import "./layouts/BasicLayout.scss";
+
+//Components
 @import "../components/Header/Header.scss";
+@import "../components/Header/Menu/Menu.scss";
+@import "../components/Modal/BasicModal/BasicModal.scss"

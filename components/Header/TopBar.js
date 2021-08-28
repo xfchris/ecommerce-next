@@ -1,42 +1,54 @@
 import styled from "styled-components";
-import Link from 'next/link'
+import Link from "next/link";
 
-const Header = styled.div`
-    padding: 5px;
-    background: #CCC;
-`
+const TopBlock = styled.div`
+  padding: 5px;
+  background: #000;
+`;
 
 const Img = styled.img`
-  height:50px;
-`
+  height: 30px;
+  transition: all 0.5s;
+  &:hover {
+    transform: translateX(-15px);
+  }
+`;
 
 export default function TopBar() {
   return (
-    <Header className="top-bar">
+    <TopBlock className="top-bar">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-sm-6 top-bar__left">
+          <div className="col-sm-6 top-bar__left ps-0">
             <Logo />
           </div>
-          <div className="col-sm-6 top-bar__right">
-              <Search />
+          <div className="col-sm-6 top-bar__right pe-0">
+            <Search />
           </div>
         </div>
       </div>
-    </Header>
+    </TopBlock>
   );
 }
 
 function Logo() {
   return (
-      <Link href="/">
-          <Img src="/img/logo.png" alt="gaming" />
-      </Link>
-  )
+    <Link href="/">
+      <a>
+        <Img src="/img/logo.png" alt="gaming" />
+      </a>
+    </Link>
+  );
 }
 
-function Search(){
-    return (
-        <input id="search-game" className="form-control float-end" />
-    )
+function Search() {
+  return (
+    <>
+      <input
+        id="search-game"
+        className="form-control float-end"
+        placeholder="Buscar..."
+      />
+    </>
+  );
 }
