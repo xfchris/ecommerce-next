@@ -1,16 +1,35 @@
 import { useFormik } from "formik";
-import { Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Form, Button, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { registerApi } from "../../../api/user";
 
 export default function RegisterForm({ showLoginForm }) {
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
-    onSubmit: (formData) => {
-      registerApi(formData);
+
+    onSubmit: async (formData) => {
+      setLoading(true);
+      const response = await registerApi(formData);
+      setLoading(false);
+
+      if (response?.jwt) {
+        toast.success("Registro completado.");
+        showLoginForm();
+      } else if (response?.error) {
+        let msg = response.data[0].messages[0].message;
+        toast.error(msg);
+      } else {
+        console.log(response);
+        toast.error("Error al registrar el usuario");
+      }
     },
   });
+
   return (
     <>
       <Form className="register-form" onSubmit={formik.handleSubmit}>
@@ -59,7 +78,7 @@ export default function RegisterForm({ showLoginForm }) {
           onChange={formik.handleChange}
           isInvalid={formik.errors.password}
         />
-        <div className="actions d-flex justify-content-end">
+        <div className="actions d-flex justify-content-between">
           <Button
             size="sm"
             onClick={showLoginForm}
@@ -68,8 +87,22 @@ export default function RegisterForm({ showLoginForm }) {
           >
             Inciar sesión
           </Button>
-          <Button size="sm" type="submit" variant="danger">
-            Registrarse
+          <Button size="sm" type="submit" variant="danger" disabled={loading}>
+            {loading ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                  className="me-1"
+                />{" "}
+                Espere...
+              </>
+            ) : (
+              "Registrarse"
+            )}
           </Button>
         </div>
       </Form>

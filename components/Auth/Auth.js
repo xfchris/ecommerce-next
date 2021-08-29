@@ -15,7 +15,7 @@ export default function Auth({ setShowModal, setTitleModal }) {
   };
 
   return showLogin ? (
-    <LoginForm showRegisterForm={showRegisterForm} />
+    <LoginForm showRegisterForm={showRegisterForm} setShowModal={setShowModal} />
   ) : (
     <RegisterForm showLoginForm={showLoginForm} />
   );
