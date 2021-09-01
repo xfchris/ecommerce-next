@@ -1,0 +1,15 @@
+.list-games {
+  &__prices {
+    margin-top: -24px;
+  }
+
+  &__card {
+    width: 200px;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 277px;
+    object-fit: cover;
+  }
+}

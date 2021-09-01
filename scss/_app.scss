@@ -3,8 +3,14 @@
 //Layouts
 @import "./layouts/BasicLayout.scss";
 
+//pages
+@import "../pages/account.scss";
+@import "../pages/index.scss";
+
 //Components
 @import "../components/Header/Header.scss";
 @import "../components/Header/Menu/Menu.scss";
 @import "../components/Modal/BasicModal/BasicModal.scss";
 @import "../components/Auth/LoginForm/loginForm.scss";
+@import "../components/Auth/Account/ChangeNameForm/ChangeNameForm.scss";
+@import "../components/ListGames/ListGames.scss";

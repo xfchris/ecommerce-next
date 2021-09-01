@@ -1,6 +1,8 @@
+import { map } from "lodash-es";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
+import { getPlatformsApi } from "../../../api/platform";
 import { getMeApi } from "../../../api/user";
 import useAuth from "../../../hooks/useAuth";
 import Auth from "../../Auth/Auth";
@@ -11,6 +13,7 @@ export default function Menu() {
   const [titleModal, setTitleModal] = useState("Iniciar sesión");
   const { auth, logout } = useAuth();
   const [user, setUser] = useState(undefined);
+  const [platforms, setPlatforms] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -19,14 +22,21 @@ export default function Menu() {
     })();
   }, [auth]);
 
+  useEffect(() => {
+    (async () => {
+      const platformsApi = await getPlatformsApi();
+      setPlatforms(platformsApi || []);
+    })();
+  }, []);
+
   return (
     <div className="menu">
       <div className="container">
         <div className="row py-2">
-          <div className="col-sm-6 menu__left ps-0">
-            <MenuPlatform />
+          <div className="col-8 menu__left ps-sm-0">
+            <MenuPlatform platforms={platforms} />
           </div>
-          <div className="col-sm-6 menu__right justify-content-end pe-0">
+          <div className="col-4 menu__right justify-content-end pe-sm-0">
             <MenuOptions
               setShowModal={setShowModal}
               auth={auth}
@@ -48,19 +58,16 @@ export default function Menu() {
   );
 }
 
-function MenuPlatform() {
+function MenuPlatform({ platforms }) {
   return (
     <>
-      <Link href="/play-station">
-        <a className="text-decoration-none btn btn-sm btn-outline-info me-1">
-          Play station
-        </a>
-      </Link>
-      <Link href="/play-station">
-        <a className="text-decoration-none btn btn-sm btn-outline-info">
-          Play station
-        </a>
-      </Link>
+      {map(platforms, (platform, i) => (
+        <Link key={i} href={"/games/" + platform.url}>
+          <a className="text-decoration-none btn btn-sm btn-outline-info me-1">
+            {platform.title}
+          </a>
+        </Link>
+      ))}
     </>
   );
 }
@@ -72,9 +79,9 @@ function MenuOptions({ setShowModal, auth, user, logout }) {
         <Dropdown.Toggle
           variant="info"
           id="dropdown-basic"
-          className="me-0 btn-sm"
+          className="my-0 btn-sm"
         >
-          <i className="bi bi-person"></i> Mi cuenta
+          <i className="bi bi-person"></i> <span className="d-none d-sm-inline">Mi cuenta</span>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>

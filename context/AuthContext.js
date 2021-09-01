@@ -7,4 +7,4 @@ const AuthContext = createContext({
   setReloadUser: () => null,
 });
 
-export default AuthContext
+export default AuthContext;

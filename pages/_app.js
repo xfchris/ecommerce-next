@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-toastify/dist/ReactToastify.css";
+import "nprogress/nprogress.css";
 import { ToastContainer } from "react-toastify";
 import "../scss/_app.scss";
 import AuthContext from "../context/AuthContext";
@@ -8,12 +9,35 @@ import { useEffect, useMemo, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { setToken, getToken, removeToken } from "../api/token";
 import { useRouter } from "next/dist/client/router";
+import App from "next/app";
+import NProgress from 'nprogress'
+import Router from 'next/router';
+
+
+NProgress.configure({});
+
+Router.onRouteChangeStart = () => {
+   console.log('onRouteChangeStart triggered');
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  console.log('onRouteChangeComplete triggered');
+  NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+  console.log('onRouteChangeError triggered');
+  NProgress.done();
+};
+
 
 export default function MyApp({ Component, pageProps }) {
   const [auth, setAuth] = useState(undefined);
   const [reloadUser, setReloadUser] = useState(false);
   const router = useRouter();
 
+  // refresh de page
   useEffect(() => {
     const token = getToken();
     if (token) {
@@ -24,8 +48,10 @@ export default function MyApp({ Component, pageProps }) {
     } else {
       setAuth(null);
     }
+    setReloadUser(false);
   }, [reloadUser]);
 
+  // user login
   const login = (token) => {
     setToken(token);
     setAuth({
@@ -34,6 +60,7 @@ export default function MyApp({ Component, pageProps }) {
     });
   };
 
+  // logout the sesion
   const logout = () => {
     if (auth) {
       removeToken();
@@ -52,7 +79,7 @@ export default function MyApp({ Component, pageProps }) {
     [auth]
   );
 
-  if (auth === undefined) return null;
+  //if (auth === undefined) return null;
 
   return (
     <AuthContext.Provider value={authData}>
@@ -71,3 +98,16 @@ export default function MyApp({ Component, pageProps }) {
     </AuthContext.Provider>
   );
 }
+
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+
+  const appPropsTemp = {
+    ...appProps,
+    pageProps: {
+      ...appProps.pageProps,
+    },
+  };
+
+  return { ...appPropsTemp };
+};

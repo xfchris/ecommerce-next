@@ -19,10 +19,10 @@ export default function TopBar() {
     <TopBlock className="top-bar">
       <div className="container">
         <div className="row align-items-center">
-          <div className="col-sm-6 top-bar__left ps-0">
+          <div className="col-6 top-bar__left ps-sm-0">
             <Logo />
           </div>
-          <div className="col-sm-6 top-bar__right pe-0">
+          <div className="col-6 top-bar__right pe-0">
             <Search />
           </div>
         </div>

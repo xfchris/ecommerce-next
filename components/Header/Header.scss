@@ -10,7 +10,7 @@
 .top-bar{
     &__right{
         input {
-            background-color: transparent !important;
+            background-color: black !important;
             border: 0;
             border-bottom: 2px solid $primary !important;
             border-radius: 0;
@@ -20,10 +20,15 @@
             font-size: 20px;
             transition: width 0.7s;
             padding-right: 0px !important;
-    
+
             &:focus {
               width: 350px;
             }
+            @media (max-width: 576px) {
+              &:focus {
+                width: 97vw;
+              }
+          }
         }
     }
   }
