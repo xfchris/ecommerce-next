@@ -5,6 +5,7 @@ import { Dropdown } from "react-bootstrap";
 import { getPlatformsApi } from "../../../api/platform";
 import { getMeApi } from "../../../api/user";
 import useAuth from "../../../hooks/useAuth";
+import useFade from "../../../hooks/useFade";
 import Auth from "../../Auth/Auth";
 import BasicModal from "../../Modal/BasicModal";
 
@@ -14,6 +15,7 @@ export default function Menu() {
   const { auth, logout } = useAuth();
   const [user, setUser] = useState(undefined);
   const [platforms, setPlatforms] = useState([]);
+  const [isVisible, setVisible, fadeProps] = useFade(false);
 
   useEffect(() => {
     (async () => {
@@ -22,10 +24,12 @@ export default function Menu() {
     })();
   }, [auth]);
 
+  //Games categories
   useEffect(() => {
     (async () => {
       const platformsApi = await getPlatformsApi();
       setPlatforms(platformsApi || []);
+      setVisible(true);
     })();
   }, []);
 
@@ -34,7 +38,11 @@ export default function Menu() {
       <div className="container">
         <div className="row py-2">
           <div className="col-8 menu__left ps-sm-0">
-            <MenuPlatform platforms={platforms} />
+            {isVisible && (
+              <div {...fadeProps}>
+                <MenuPlatform platforms={platforms} />
+              </div>
+            )}
           </div>
           <div className="col-4 menu__right justify-content-end pe-sm-0">
             <MenuOptions
@@ -76,19 +84,21 @@ function MenuOptions({ setShowModal, auth, user, logout }) {
   return auth ? (
     <>
       <Dropdown>
-        <Dropdown.Toggle
+        <Dropdown.Toggle 
           variant="info"
           id="dropdown-basic"
           className="my-0 btn-sm"
+          align={'end'}
         >
-          <i className="bi bi-person"></i> <span className="d-none d-sm-inline">Mi cuenta</span>
+          <i className="bi bi-person"></i>{" "}
+          <span className="d-none d-sm-inline">Mi cuenta</span>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
           <Dropdown.Item>
             <Link href="/account">
               <span>
-                {user?.name} {user?.lastname}{" "}
+                {user?.name?.split(' ')[0]} {user?.lastname?.split(' ')[0]}{" "}
               </span>
             </Link>
           </Dropdown.Item>

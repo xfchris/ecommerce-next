@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useRouter } from "next/dist/client/router";
+import { useEffect, useState } from "react";
 
 const TopBlock = styled.div`
   padding: 5px;
@@ -42,12 +44,25 @@ function Logo() {
 }
 
 function Search() {
+  const [value, setValue] = useState("");
+  const router = useRouter();
+  const [mount, setMount] = useState(false);
+
+  useEffect(() => {
+    if (mount) {
+      router.push(`/search?query=${value}`);
+    }
+    setMount(true);
+  }, [value]);
+
   return (
     <>
       <input
         id="search-game"
         className="form-control float-end"
         placeholder="Buscar..."
+        defaultValue={router.query.query}
+        onChange={(input) => setValue(input.target.value)}
       />
     </>
   );

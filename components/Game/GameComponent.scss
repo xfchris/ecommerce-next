@@ -1,0 +1,30 @@
+.gameComponent {
+}
+
+.carouselScreenshorts {
+
+  .slick-slide {
+    padding: 5px 0;
+
+    img:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+
+  .slick-arrow {
+    z-index: 1;
+
+    &:before {
+      font-size: 20px;
+    }
+
+    &.slick-next {
+      right: 10px;
+    }
+
+    &.slick-prev {
+      left: 10px;
+    }
+  }
+}

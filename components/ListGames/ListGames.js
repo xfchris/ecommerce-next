@@ -7,7 +7,7 @@ export default function ListGames({ games }) {
     <div className="list-games">
       <div className="row">
         {map(games, (game) => (
-          <div key={game._id} className="col-sm-6 col-md-4 col-lg-3 col-xl-2">
+          <div key={game._id} className="col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2">
             <Caratule game={game} />
           </div>
         ))}

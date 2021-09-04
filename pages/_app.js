@@ -12,22 +12,20 @@ import { useRouter } from "next/dist/client/router";
 import App from "next/app";
 import NProgress from 'nprogress'
 import Router from 'next/router';
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 NProgress.configure({});
 
 Router.onRouteChangeStart = () => {
-   console.log('onRouteChangeStart triggered');
   NProgress.start();
 };
 
 Router.onRouteChangeComplete = () => {
-  console.log('onRouteChangeComplete triggered');
   NProgress.done();
 };
 
 Router.onRouteChangeError = () => {
-  console.log('onRouteChangeError triggered');
   NProgress.done();
 };
 

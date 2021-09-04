@@ -2,6 +2,7 @@ import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 import { getMeApi } from "../api/user";
 import ChangeNameForm from "../components/Auth/Account/ChangeNameForm";
+import Seo from "../components/Seo";
 import useAuth from "../hooks/useAuth";
 import BasicLayout from "../layouts/BasicLayout";
 
@@ -28,6 +29,7 @@ export default function account() {
 
   return (
     <BasicLayout className="account">
+      <Seo title="Mi cuenta" />
       {user !== undefined && (
         <Configuracion user={user} logout={logout} reloadUser={reloadUser} />
       )}
