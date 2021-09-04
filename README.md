@@ -1,4 +1,4 @@
-# Prueba, desarrollo de una tienda de juegos en React y Next.js
+Desarrollo de una tienda de juegos con Next.js
 
 ### Pre-requisitos 📋
 
